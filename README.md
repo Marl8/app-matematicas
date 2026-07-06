@@ -60,4 +60,19 @@ $ mau deploy
 - class-validator
 - Swagger
 
+## DER
 
+<p align="center">
+  <a href="http://nestjs.com/" target="blank"><img src="https://lh3.googleusercontent.com/u/0/d/1d9Wpjug8S7kRgdaxA9wD50M4vMZa0fBp" width="500" alt="Nest Logo" /></a>
+</p>
+
+## Swagger
+
+Open API Documentation in Swagger: 
+- Open the url.
+- Login with your credentials.
+- Copy the token and paste it into the Authorize section.
+
+```text
+http://localhost:3000/api
+```
