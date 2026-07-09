@@ -63,6 +63,29 @@ export class EjercicioService {
     return ejercicio;
   }
 
+  async findByOrdenYSubtema(
+    numOrden: number,
+    idSubtema: number,
+  ): Promise<Ejercicio> {
+    const ejercicio = await this.ejercicioRepository.findOne({
+      where: {
+        num_orden: numOrden,
+        leccion: {
+          idSubtema: idSubtema,
+        },
+      },
+      relations: {
+        leccion: true,
+      },
+    });
+    if (!ejercicio) {
+      throw new NotFoundException(
+        `No se encontró un ejercicio con el orden ${numOrden} para el subtema con ID ${idSubtema}`,
+      );
+    }
+    return ejercicio;
+  }
+
   async update(
     id_ejercicio: number,
     updateEjercicioDto: UpdateEjercicioDto,

@@ -45,6 +45,14 @@ export class EjercicioController {
     return await this.ejercicioService.findByOrdenYLeccion(numOrden, idLeccion);
   }
 
+  @Get('subtema/:idSubtema/orden/:numOrden')
+  async findByNumOrdenYSubtema(
+    @Param('idSubtema', ParseIntPipe) idSubtema: number,
+    @Param('numOrden', ParseIntPipe) numOrden: number,
+  ): Promise<Ejercicio> {
+    return await this.ejercicioService.findByOrdenYLeccion(numOrden, idSubtema);
+  }
+
   @Patch(':id')
   async update(
     @Param('id', ParseIntPipe) id: number,
