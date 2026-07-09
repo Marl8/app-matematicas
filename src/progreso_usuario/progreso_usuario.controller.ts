@@ -22,8 +22,8 @@ export class ProgresoUsuarioController {
   constructor(private readonly progresoService: ProgresoUsuarioService) {}
 
   @Post()
-  create(@Body() createDto: CreateProgresoUsuarioDto) {
-    return this.progresoService.create(createDto);
+  createOrFind(@Body() createDto: CreateProgresoUsuarioDto) {
+    return this.progresoService.createOrFind(createDto);
   }
 
   @Get()

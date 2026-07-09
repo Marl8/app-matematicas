@@ -18,7 +18,16 @@ export class ProgresoUsuarioService {
     private readonly ejercicioService: EjercicioService,
   ) {}
 
-  async create(createDto: CreateProgresoUsuarioDto): Promise<ProgresoUsuario> {
+  /**
+   * Busca el progreso de un usuario para un subtema específico.
+   * Si ya existe, lo retorna, si no, lo crea desde cero inicializándolo en el ejercicio 1.
+   *
+   * @param createDto - Datos necesarios para buscar o crear el progreso.
+   * @returns El progreso del usuario (existente o recién creado).
+   */
+  async createOrFind(
+    createDto: CreateProgresoUsuarioDto,
+  ): Promise<ProgresoUsuario> {
     let progreso = await this.progresoRepository.findOne({
       where: {
         idUsuario: createDto.idUsuario,
@@ -101,6 +110,16 @@ export class ProgresoUsuarioService {
     return progreso;
   }
 
+  /**
+   * Actualiza el progreso del usuario.
+   *
+   * @param id - ID del progreso a actualizar.
+   * @param updateDto - Datos de actualización (recibe el número de orden del próximo ejercicio y xp).
+   * @returns El progreso del usuario actualizado.
+   * @description
+   * Si el ejercicio completado era el número 3 (el último del subtema),
+   * el DTO debería registrar el subtema como completado (`subtemaCompletado = true`).
+   */
   async update(
     id: number,
     updateDto: UpdateProgresoUsuarioDto,
