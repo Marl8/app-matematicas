@@ -3,6 +3,7 @@ import {
   IsNotEmpty,
   IsOptional,
   IsString,
+  IsNumber,
   MaxLength,
 } from 'class-validator';
 
@@ -34,4 +35,8 @@ export class CreateLeccionDto {
   @IsOptional()
   @IsString({ message: 'La descripción debe ser una cadena de texto' })
   tips!: string;
+
+  @IsNumber()
+  @IsNotEmpty({ message: 'El num_orden es obligatorio.' })
+  numOrden!: number;
 }

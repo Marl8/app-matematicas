@@ -21,12 +21,16 @@ export class CreateProgresoUsuarioDto {
   idSubtema!: number;
 
   @IsNumber()
-  @IsNotEmpty({ message: 'El id de la lección es obligatorio' })
-  idLeccion!: number;
+  @IsOptional()
+  idLeccion?: number;
 
   @IsNumber()
   @IsOptional()
   idEjercicio?: number;
+
+  @IsOptional()
+  @IsBoolean()
+  leccionCompletado?: boolean;
 
   @IsOptional()
   @IsBoolean()

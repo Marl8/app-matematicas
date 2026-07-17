@@ -35,7 +35,13 @@ export class ProgresoUsuario {
   idEjercicio!: number;
 
   @Column({ type: 'int', default: 1 })
+  numOrdenLeccion!: number;
+
+  @Column({ type: 'int', default: 1 })
   numOrdenEjercicio!: number;
+
+  @Column({ name: 'leccion_completada', default: false })
+  leccionCompletado!: boolean;
 
   @Column({ name: 'subtema_completado', default: false })
   subtemaCompletado!: boolean;

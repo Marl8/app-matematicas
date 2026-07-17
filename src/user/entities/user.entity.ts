@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn} from 'typeorm';
 
 @Entity('users')
 export class User {
@@ -16,4 +16,13 @@ export class User {
 
   @Column({ select: false })
   password?: string; // El signo ? es opcional por si no queremos exponerlo en consultas locales
+
+  @CreateDateColumn()
+  created_at!: Date;
+
+  @Column({ default: 1 })
+  current_level!: number;
+
+  @Column({ type: 'timestamp', nullable: true })
+  last_login!: Date;
 }

@@ -4,9 +4,19 @@ import { ProgresoUsuarioService } from './progreso_usuario.service';
 import { ProgresoUsuarioController } from './progreso_usuario.controller';
 import { ProgresoUsuario } from './entities/progreso_usuario.entity';
 import { EjercicioModule } from '../ejercicio/ejercicio.module';
+import { SubtemaModule } from '../subtema/subtema.module';
+import { LeccionModule } from '../leccion/leccion.module';
+import { Subtema } from '../subtema/entities/subtema.entity';
+import { Ejercicio } from '../ejercicio/entities/ejercicio.entity';
+import { Leccion } from '../leccion/entities/leccion.entity';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([ProgresoUsuario]), EjercicioModule],
+  imports: [
+    TypeOrmModule.forFeature([ProgresoUsuario, Subtema, Ejercicio, Leccion]),
+    EjercicioModule,
+    SubtemaModule,
+    LeccionModule,
+  ],
   controllers: [ProgresoUsuarioController],
   providers: [ProgresoUsuarioService],
   exports: [ProgresoUsuarioService],

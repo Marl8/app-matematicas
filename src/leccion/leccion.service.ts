@@ -26,6 +26,24 @@ export class LeccionService {
     });
   }
 
+  async findLeccionBySubtemaYOrden(
+    idSubtema: number,
+    numOrden: number,
+  ): Promise<Leccion> {
+    const leccion = await this.leccionRepository.findOne({
+      where: {
+        idSubtema: idSubtema,
+        numOrden: numOrden,
+      },
+    });
+    if (!leccion) {
+      throw new NotFoundException(
+        `No se encontró la lección con orden ${numOrden} para el subtema con ID ${idSubtema}`,
+      );
+    }
+    return leccion;
+  }
+
   async findOne(id: number): Promise<Leccion> {
     const leccion = await this.leccionRepository.findOne({
       where: { idLeccion: id },

@@ -33,6 +33,9 @@ export class Leccion {
   @Column({ name: 'tips', type: 'text', default: 'null' })
   tips!: string;
 
+  @Column({ type: 'int', default: 1 })
+  numOrden!: number;
+
   @ManyToOne(() => Subtema, (subtema) => subtema.lecciones, {
     onDelete: 'CASCADE',
   })

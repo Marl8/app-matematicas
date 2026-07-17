@@ -11,6 +11,7 @@ import { LeccionModule } from './leccion/leccion.module';
 import { EjercicioModule } from './ejercicio/ejercicio.module';
 import { OpcionesEjercicioModule } from './opciones_ejercicio/opciones_ejercicio.module';
 import { ProgresoUsuarioModule } from './progreso_usuario/progreso_usuario.module';
+import { EventosUsuarioModule } from './eventos_usuario/eventos_usuario.module';
 
 @Module({
   imports: [
@@ -38,6 +39,7 @@ import { ProgresoUsuarioModule } from './progreso_usuario/progreso_usuario.modul
     EjercicioModule,
     OpcionesEjercicioModule,
     ProgresoUsuarioModule,
+    EventosUsuarioModule,
   ],
   controllers: [AppController],
   providers: [AppService],
