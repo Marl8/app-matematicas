@@ -28,9 +28,8 @@ export class CreateLeccionDto {
   @IsString({ message: 'La descripción debe ser una cadena de texto' })
   descripcionLeccion!: string;
 
-  @IsString({ message: 'El contenido debe ser una cadena de texto' })
   @IsNotEmpty({ message: 'El contenido de la lección es requerido' })
-  contenidoLeccion!: string;
+  contenidoLeccion!: any;
 
   @IsOptional()
   @IsString({ message: 'La descripción debe ser una cadena de texto' })

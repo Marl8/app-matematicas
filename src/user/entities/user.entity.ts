@@ -1,4 +1,9 @@
-import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn} from 'typeorm';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  CreateDateColumn,
+} from 'typeorm';
 
 @Entity('users')
 export class User {
@@ -20,9 +25,9 @@ export class User {
   @CreateDateColumn()
   created_at!: Date;
 
-  @Column({ default: 1 })
-  current_level!: number;
-
   @Column({ type: 'timestamp', nullable: true })
   last_login!: Date;
+
+  @Column({ default: 0 })
+  login_streak!: number;
 }

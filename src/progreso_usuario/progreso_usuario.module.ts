@@ -9,6 +9,8 @@ import { LeccionModule } from '../leccion/leccion.module';
 import { Subtema } from '../subtema/entities/subtema.entity';
 import { Ejercicio } from '../ejercicio/entities/ejercicio.entity';
 import { Leccion } from '../leccion/entities/leccion.entity';
+import { EventosUsuarioModule } from '../eventos_usuario/eventos_usuario.module';
+import { IntentoEjercicioModule } from '../intento_ejercicio/intento_ejercicio.module';
 
 @Module({
   imports: [
@@ -16,6 +18,8 @@ import { Leccion } from '../leccion/entities/leccion.entity';
     EjercicioModule,
     SubtemaModule,
     LeccionModule,
+    EventosUsuarioModule,
+    IntentoEjercicioModule,
   ],
   controllers: [ProgresoUsuarioController],
   providers: [ProgresoUsuarioService],

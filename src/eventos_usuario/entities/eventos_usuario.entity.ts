@@ -2,6 +2,7 @@ import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, CreateDateColumn, Jo
 import { User } from '../../user/entities/user.entity';
 import { Leccion } from '../../leccion/entities/leccion.entity';
 import { Ejercicio } from '../../ejercicio/entities/ejercicio.entity';
+import { tipo_eventos } from './enums/tipo_eventos.enum';
 
 @Entity('eventos_usuario')
 @Index(['usuario'])
@@ -13,8 +14,8 @@ export class EventosUsuario {
     @JoinColumn({ name: 'id_usuario' })
     usuario!: User;
 
-    @Column()
-    tipo_evento!: string;
+    @Column({ type: 'enum', enum: tipo_eventos })
+    tipo_evento!: tipo_eventos;
 
     @CreateDateColumn()
     fecha_evento!: Date;

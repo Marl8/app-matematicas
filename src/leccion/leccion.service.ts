@@ -4,6 +4,7 @@ import { Repository } from 'typeorm';
 import { Leccion } from './entities/leccion.entity';
 import { CreateLeccionDto } from './dto/create-leccion.dto';
 import { UpdateLeccionDto } from './dto/update-leccion.dto';
+import { LeccionResponseDto } from './dto/response-leccion.dto';
 
 @Injectable()
 export class LeccionService {
@@ -44,7 +45,17 @@ export class LeccionService {
     return leccion;
   }
 
-  async findOne(id: number): Promise<Leccion> {
+  async findOne(id: number): Promise<LeccionResponseDto> {
+    const leccion = await this.leccionRepository.findOneBy({ idLeccion: id });
+
+    if (!leccion) {
+      throw new NotFoundException(`Lección con ID ${id} no encontrada`);
+    }
+
+    return LeccionResponseDto.fromEntity(leccion);
+  }
+
+  private async findById(id: number): Promise<Leccion> {
     const leccion = await this.leccionRepository.findOne({
       where: { idLeccion: id },
     });
@@ -63,7 +74,7 @@ export class LeccionService {
   }
 
   async update(id: number, leccionDto: UpdateLeccionDto) {
-    const leccion = await this.findOne(id);
+    const leccion = await this.findById(id);
     if (!leccion) throw new NotFoundException('Usuario no encontrado');
     const leccionActualizada = this.leccionRepository.merge(
       leccion,
@@ -74,7 +85,7 @@ export class LeccionService {
   }
 
   async remove(id: number): Promise<{ deleted: boolean }> {
-    const leccion = await this.findOne(id);
+    const leccion = await this.findById(id);
     await this.leccionRepository.remove(leccion);
     return { deleted: true };
   }

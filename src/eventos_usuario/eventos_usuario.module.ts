@@ -10,5 +10,6 @@ import { EventosUsuario } from './entities/eventos_usuario.entity';
   ],
   controllers: [EventosUsuarioController],
   providers: [EventosUsuarioService],
+  exports: [EventosUsuarioService],
 })
 export class EventosUsuarioModule {}

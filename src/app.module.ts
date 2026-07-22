@@ -12,6 +12,7 @@ import { EjercicioModule } from './ejercicio/ejercicio.module';
 import { OpcionesEjercicioModule } from './opciones_ejercicio/opciones_ejercicio.module';
 import { ProgresoUsuarioModule } from './progreso_usuario/progreso_usuario.module';
 import { EventosUsuarioModule } from './eventos_usuario/eventos_usuario.module';
+import { IntentoEjercicioModule } from './intento_ejercicio/intento_ejercicio.module';
 
 @Module({
   imports: [
@@ -40,6 +41,7 @@ import { EventosUsuarioModule } from './eventos_usuario/eventos_usuario.module';
     OpcionesEjercicioModule,
     ProgresoUsuarioModule,
     EventosUsuarioModule,
+    IntentoEjercicioModule,
   ],
   controllers: [AppController],
   providers: [AppService],

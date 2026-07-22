@@ -13,6 +13,9 @@ import { EjercicioService } from '../ejercicio/ejercicio.service';
 import { LeccionService } from '../leccion/leccion.service';
 import { CreateProgresoUsuarioDto } from './dto/create-progreso_usuario.dto';
 import { UpdateProgresoUsuarioDto } from './dto/update-progreso_usuario.dto';
+import { IntentoEjercicioService } from '../intento_ejercicio/intento_ejercicio.service';
+import { EventosUsuarioService } from '../eventos_usuario/eventos_usuario.service';
+import { LeccionResponseDto } from '../leccion/dto/response-leccion.dto';
 
 // Reglas de negocio del dominio: 3 lecciones por subtema, 3 ejercicios por lección
 const ORDEN_MIN = 1;
@@ -29,6 +32,8 @@ export class ProgresoUsuarioService {
     private readonly subtemaRepository: Repository<Subtema>,
     private readonly ejercicioService: EjercicioService,
     private readonly leccionService: LeccionService,
+    private readonly intentoEjercicioService: IntentoEjercicioService,
+    private readonly eventosUsuarioService: EventosUsuarioService,
   ) {}
 
   /**
@@ -60,7 +65,7 @@ export class ProgresoUsuarioService {
       );
       const nuevoProgreso = this.progresoRepository.create({
         ...createDto,
-        numOrdenLeccion: leccion.idLeccion,
+        numOrdenLeccion: leccion.numOrden,
         idLeccion: leccion.idLeccion,
         numOrdenEjercicio: ejercicio.num_orden,
         idEjercicio: ejercicio.id_ejercicio,
@@ -109,7 +114,7 @@ export class ProgresoUsuarioService {
     });
   }
 
-  async findUltimoProgreso(idUsuario: number): Promise<ProgresoUsuario | null> {
+  async findUltimoProgreso(idUsuario: number) {
     const progreso = await this.progresoRepository.findOne({
       where: { idUsuario },
       order: {
@@ -127,7 +132,12 @@ export class ProgresoUsuarioService {
         `No se encontró historial de progreso para el usuario ${idUsuario}`,
       );
     }
-    return progreso;
+    const { leccion, ...restoDelProgreso } = progreso;
+
+    return {
+      ...restoDelProgreso,
+      leccion: leccion ? LeccionResponseDto.fromEntity(leccion) : null,
+    };
   }
 
   /**
@@ -154,6 +164,13 @@ export class ProgresoUsuarioService {
     const ejercicioCompletado = updateDto.ejercicioCompletado ?? false;
 
     this.validarOrdenes(numOrdenLeccion, numOrdenEjercicio);
+
+    // Registrar actividad del usuario en la tabla de intentos de ejercicios
+    await this.registrarActividadRespuesta(
+      progresoActual,
+      updateDto,
+      ejercicioCompletado,
+    );
 
     // Cálculos puros (sin ir a la base), para saber hacia dónde avanza el usuario
     const estado = this.determinarEstadoCompletado(
@@ -372,5 +389,27 @@ export class ProgresoUsuarioService {
     }
     await this.progresoRepository.remove(progreso);
     return { message: `Progreso con ID ${id} eliminado correctamente` };
+  }
+
+  private async registrarActividadRespuesta(
+    progresoActual: ProgresoUsuario,
+    updateDto: UpdateProgresoUsuarioDto,
+    ejercicioCompletado: boolean,
+  ): Promise<void> {
+    await this.intentoEjercicioService.create({
+      id_usuario: progresoActual.idUsuario,
+      id_subtema: progresoActual.idSubtema,
+      id_ejercicio: progresoActual.idEjercicio,
+      id_opciones: undefined, //updateDto.idOpcion,
+      completado: ejercicioCompletado,
+      response_time: undefined, //updateDto.responseTime,
+    });
+    await this.eventosUsuarioService.create({
+      //crea evento
+      id_usuario: progresoActual.idUsuario,
+      tipo_evento: 'answer_submit',
+      id_ejercicio: progresoActual.idEjercicio,
+      id_leccion: progresoActual.idLeccion,
+    });
   }
 }

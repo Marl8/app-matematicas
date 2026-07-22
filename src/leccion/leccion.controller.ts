@@ -13,6 +13,7 @@ import { LeccionService } from './leccion.service';
 import { Leccion } from './entities/leccion.entity';
 import { CreateLeccionDto } from './dto/create-leccion.dto';
 import { UpdateLeccionDto } from './dto/update-leccion.dto';
+import { LeccionResponseDto } from './dto/response-leccion.dto';
 import { AuthGuard } from '@nestjs/passport';
 import { ApiBearerAuth } from '@nestjs/swagger';
 
@@ -28,7 +29,9 @@ export class LeccionController {
   }
 
   @Get(':id')
-  async getOne(@Param('id', ParseIntPipe) id: number): Promise<Leccion> {
+  async getOne(
+    @Param('id', ParseIntPipe) id: number,
+  ): Promise<LeccionResponseDto> {
     return await this.leccionService.findOne(id);
   }
 

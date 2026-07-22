@@ -27,7 +27,7 @@ export class Leccion {
   @Column({ name: 'descripcion_leccion', type: 'text', nullable: true })
   descripcionLeccion!: string;
 
-  @Column({ name: 'contenido_leccion', type: 'text' })
+  @Column({ name: 'contenido_leccion', type: 'text', nullable: true })
   contenidoLeccion!: string;
 
   @Column({ name: 'tips', type: 'text', default: 'null' })
