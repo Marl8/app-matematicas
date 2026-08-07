@@ -7,7 +7,7 @@
 
 ## Description
 
-Backend en Nest Js realizado para un proyecto colaborativo de una app de Ejercicios de Matemáticas, en el marco del programa de Innova Lab impulsado por la Agencia de Aprendizaje de la ciudad de Buenos Aires. 
+API desarrollada con NestJS para una aplicación mobile de aprendizaje de matemáticas. Proyecto colaborativo impulsado por el programa InnovaLab de la Agencia de Aprendizaje de la Ciudad de Buenos Aires.
 
 ## Project setup
 
